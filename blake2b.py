@@ -17,11 +17,10 @@ a_hashes = [] #""
 for trait in TRAITS:
     m = hashlib.blake2b(trait.encode(), digest_size=64, key=KEY)
     trait_hash = m.hexdigest()
-    a_hashes += [f"{trait_hash.encode('utf-8').decode()}"]
+    a_hashes += [f"{trait_hash}"]
 
-json_hashes = json.dumps(a_hashes)
-print(f"JSON HASHES:\n{json_hashes}")
+print(f"TRAIT HASHES:\n{a_hashes}")
 
-resp = requests.post(URL, json = json.loads(json_hashes))
+resp = requests.post(URL, json = a_hashes)
 
 print(resp.text)
