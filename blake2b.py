@@ -7,26 +7,21 @@ resp = requests.get(URL)
 print(resp.text)
 
 data = json.loads(resp.text)
-print(data["traits"])
-print(data["key"])
-
 TRAITS = data["traits"]
 KEY = data["key"].encode('utf-8')
 
-i = 0
-json_hashes = ""
-for trait in TRAITS:
+print(f"TRAITS: {TRAITS}")
+print(f"KEY: {KEY}")
+
+a_hashes = [] #""
+for (i, trait) in enumerate(TRAITS):
     m = hashlib.blake2b(trait.encode(), digest_size=64, key=KEY)
     trait_hash = m.hexdigest()
-    if i == 0:
-        json_hashes = "[\"" + trait_hash + "\",\n"
-    elif i == len(TRAITS) - 1:
-        json_hashes += "\"" + trait_hash + "\"]\n"
-    else:
-        json_hashes += "\"" + trait_hash + "\",\n"
-    i += 1
-    
-print(json_hashes)
+    a_hashes += [f"{trait_hash.encode('utf-8').decode()}"]
+
+json_hashes = json.dumps(a_hashes)
+print(f"JSON HASHES:\n{json_hashes}")
+
 resp = requests.post(URL, json = json.loads(json_hashes))
 
 print(resp.text)
