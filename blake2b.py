@@ -14,7 +14,7 @@ print(f"TRAITS: {TRAITS}")
 print(f"KEY: {KEY}")
 
 a_hashes = [] #""
-for (i, trait) in enumerate(TRAITS):
+for trait in TRAITS:
     m = hashlib.blake2b(trait.encode(), digest_size=64, key=KEY)
     trait_hash = m.hexdigest()
     a_hashes += [f"{trait_hash.encode('utf-8').decode()}"]
