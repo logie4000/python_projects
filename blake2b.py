@@ -13,11 +13,10 @@ KEY = data["key"].encode('utf-8')
 print(f"TRAITS: {TRAITS}")
 print(f"KEY: {KEY}")
 
-a_hashes = [] #""
+a_hashes = []
 for trait in TRAITS:
     m = hashlib.blake2b(trait.encode(), digest_size=64, key=KEY)
-    trait_hash = m.hexdigest()
-    a_hashes += [f"{trait_hash}"]
+    a_hashes += [m.hexdigest()]
 
 print(f"TRAIT HASHES:\n{a_hashes}")
 
